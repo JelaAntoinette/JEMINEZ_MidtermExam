@@ -27,19 +27,19 @@ $routes->get('dashboard', 'Auth::dashboardRedirect');
 $routes->group('student', ['filter' => 'roleauth'], function($routes) {
     $routes->get('dashboard', 'StudentController::dashboard');
     $routes->get('my-courses', 'StudentController::myCourses');
-    $routes->get('announcements', 'Announcement::index');
+    $routes->get('announcement', 'Announcement::index');
 });
 
 // Teacher Routes
 $routes->group('teacher', ['filter' => 'roleauth'], function($routes) {
     $routes->get('dashboard', 'Teacher::dashboard');
-    $routes->get('announcements', 'Announcement::index');
+    $routes->get('announcement', 'Announcement::index');
 });
 
 // Admin Routes
 $routes->group('admin', ['filter' => 'roleauth'], function($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
-    $routes->get('announcements', 'Announcement::index');
+    $routes->get('announcement', 'Announcement::index');
     $routes->get('users', 'AdminController::index');
     $routes->get('users/create', 'AdminController::create');
     $routes->post('users/store', 'AdminController::store');

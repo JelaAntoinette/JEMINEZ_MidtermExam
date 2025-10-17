@@ -19,7 +19,7 @@
                         <p>This is your admin dashboard where you can manage the entire system.</p>
                         
                         <div class="mt-4">
-                            <a href="<?= base_url('admin/announcements') ?>" class="btn btn-primary">View Announcements</a>
+                            <a href="<?= base_url('admin/announcement') ?>" class="btn btn-primary">View Announcements</a>
                             <a href="<?= base_url('admin/users') ?>" class="btn btn-info">Manage Users</a>
                             <a href="<?= base_url('logout') ?>" class="btn btn-secondary">Logout</a>
                         </div>

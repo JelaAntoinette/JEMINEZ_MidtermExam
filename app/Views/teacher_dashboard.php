@@ -19,7 +19,7 @@
                         <p>This is your teacher dashboard where you can manage your classes and students.</p>
                         
                         <div class="mt-4">
-                            <a href="<?= base_url('teacher/announcements') ?>" class="btn btn-primary">View Announcements</a>
+                            <a href="<?= base_url('teacher/announcement') ?>" class="btn btn-primary">View Announcements</a>
                             <a href="<?= base_url('logout') ?>" class="btn btn-secondary">Logout</a>
                         </div>
                     </div>
