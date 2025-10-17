@@ -91,7 +91,7 @@ class Auth extends BaseController
                 } elseif ($role === 'teacher') {
                     return redirect()->to(base_url('teacher/dashboard'));
                 } else { // student
-                    return redirect()->to(base_url('student/dashboard'));
+                    return redirect()->to(base_url('student/announcements'));
                 }
             } else {
                 $this->session->setFlashdata('error', 'Invalid login credentials.');

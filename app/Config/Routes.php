@@ -23,21 +23,23 @@ $routes->get('logout', 'Auth::logout');
 // Fallback generic dashboard route (redirects to role-specific)
 $routes->get('dashboard', 'Auth::dashboardRedirect');
 
-// Role-specific Dashboard Routes
-$routes->get('student/dashboard', 'StudentController::dashboard');
-$routes->get('student/my-courses', 'StudentController::myCourses');  // ✅ NEW ROUTE
-$routes->get('teacher/dashboard', 'TeacherController::dashboard');
-$routes->get('admin/dashboard', 'AdminController::dashboard');
+// Student Routes
+$routes->group('student', ['filter' => 'roleauth'], function($routes) {
+    $routes->get('dashboard', 'StudentController::dashboard');
+    $routes->get('my-courses', 'StudentController::myCourses');
+    $routes->get('announcements', 'Announcement::index');
+});
 
-// Course Routes (Student)
-$routes->get('courses', 'Course::index');
-$routes->get('course/view/(:num)', 'Course::view/$1');
-$routes->post('course/enroll', 'StudentController::enroll');  // ✅ Fixed route
-$routes->post('student/enroll', 'StudentController::enroll');
+// Teacher Routes
+$routes->group('teacher', ['filter' => 'roleauth'], function($routes) {
+    $routes->get('dashboard', 'Teacher::dashboard');
+    $routes->get('announcements', 'Announcement::index');
+});
 
 // Admin Routes
-$routes->group('admin', function($routes) {
-    $routes->get('/', 'AdminController::dashboard');
+$routes->group('admin', ['filter' => 'roleauth'], function($routes) {
+    $routes->get('dashboard', 'Admin::dashboard');
+    $routes->get('announcements', 'Announcement::index');
     $routes->get('users', 'AdminController::index');
     $routes->get('users/create', 'AdminController::create');
     $routes->post('users/store', 'AdminController::store');
@@ -46,6 +48,15 @@ $routes->group('admin', function($routes) {
     $routes->get('users/delete/(:num)', 'AdminController::delete/$1');
     $routes->get('logout', 'AdminController::logout');
 });
+
+// Course Routes (Student)
+$routes->get('courses', 'Course::index');
+$routes->get('course/view/(:num)', 'Course::view/$1');
+$routes->post('course/enroll', 'StudentController::enroll');  // ✅ Fixed route
+$routes->post('student/enroll', 'StudentController::enroll');
+
+// General announcements route (for public access or fallback)
+$routes->get('announcements', 'Announcement::index');
 
 // Optional shortcut route for managing users
 $routes->get('users', 'AdminController::index');
