@@ -36,6 +36,14 @@ class RoleAuth implements FilterInterface
         $uri = $request->getUri();
         $path = $uri->getPath();
         
+        // Remove project folder from path if present (for XAMPP)
+        $path = str_replace('/ITE311-JEMINEZ', '', $path);
+        
+        // Normalize path - ensure it starts with /
+        if ($path === '' || $path === 'ITE311-JEMINEZ') {
+            $path = '/';
+        }
+        
         // Admin can access any route starting with /admin
         if ($userRole === 'admin') {
             if (strpos($path, '/admin') === 0) {
@@ -58,7 +66,7 @@ class RoleAuth implements FilterInterface
         }
         
         // If user tries to access a route not permitted for their role
-        $session->setFlashdata('error', 'Access Denied: Insufficient Permissions');
+        $session->setFlashdata('error', 'Access Denied: Insufficient Permissions. Role: ' . $userRole . ', Path: ' . $path);
         return redirect()->to(base_url('announcements'));
     }
 
